@@ -80,7 +80,21 @@
                 </li>
             </ul>
             <div class="post-content">
-                
+                <h1 id="Vue入门"><a href="#Vue入门" class="headerlink" title="Vue入门"></a>Vue入门</h1><h2 id="基本概念和常用指令"><a href="#基本概念和常用指令" class="headerlink" title="基本概念和常用指令"></a>基本概念和常用指令</h2><p>vue与jquery的区别，最重要的一点就是前者属于声明式的，描述状态与视图之间的关系，我们关注“状态”，或者说是“数据”，而后者属于命令式的，我们需要完成对状态的判断，再进行DOM操作。而vue在背后做了许多工作，把数据和DOM联系起来，让我们能使用简洁的，有序，更易于维护的语法来完成网页的交互。</p>
+<p><strong>核心概念</strong>：1.组件化（细分代码）<br>             2.双向数据流（ES5:defineProperty）（js内存属性&lt;——&gt;页面变化）</p>
+<p><a href="https://cn.vuejs.org/v2/guide/comparison.html" target="_blank" rel="noopener">vue与react，angular之间的区别（链接）</a></p>
+<p><strong>vue中常用指令</strong></p>
+<ol>
+<li>v-text：更新元素的innertext</li>
+<li>v-html：更新元素的innerhtml</li>
+<li>v-show：元素是否显示或隐藏</li>
+<li>v-if：元素是否移除</li>
+<li>v-model：双向数据绑定</li>
+<li>v-bind：单向数据绑定(js影响页面)，class结合v-bind(v-bind:class=”xxx”,简写：’:属性名=”表达式”‘)</li>
+<li>v-on：监听DOM事件(v-on:事件=”表达式||函数名”,简写：‘@事件=”表达式||函数名”‘)</li>
+<li>v-for：操作数组（item,index）或对象(value,key,index)</li>
+</ol>
+
             </div>
 </article>
 
