@@ -135,13 +135,13 @@ stage.update();
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/1.png" alt=""></p>
+</code></pre><p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/1.png" alt="avatar"></p>
 <hr>
 <p>可以明显地看到左边那个矩形上边框明显较细。<br>开始，我怀疑是easeljs绘制矩形做了一些处理；实际上，和canvas绘制直线的方式有关。</p>
 <blockquote>
 </blockquote>
 <p>canvas绘制线条是从中间向两边绘制的，比如说你定义x坐标为1，直线宽度为1，它就会以1为中心，向左0.5像素，向右0.5像素，但是渲染时不支持小于0.5像素，所以会绘制成1像素，然后左边右边各1像素，你得到得就是双倍加粗版线条；另外，当你绘制的内容超出画布时是不会显示的，在我的实例中，矩形的绘制起点是（0,0），线的宽度是2，所以上边框只能显示出宽度为1的线条。所以，我把绘制起点改成（4,4），就可以绘制出粗细一致的矩形框了。</p>
-<p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/2.png" alt=""></p>
+<p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/2.png" alt="avatar"></p>
 
             </div>
 </article>
