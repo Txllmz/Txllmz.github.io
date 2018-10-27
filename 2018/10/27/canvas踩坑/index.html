@@ -68,38 +68,80 @@
                 <main class="main">
                     <article class="post">
     
-        <h4 class="post-cat">
-            <a href="/categories/web框架/">
-                web框架
-            </a>
-        </h4>
-        
             <h2 class="post-title">
-                vue入门
+                canvas踩坑
             </h2>
             <ul class="post-date">
                 <li>
-                    2018-10-24
+                    2018-10-27
                 </li>
                 <li>
                     Lmz
                 </li>
             </ul>
             <div class="post-content">
-                <h1 id="Vue入门"><a href="#Vue入门" class="headerlink" title="Vue入门"></a>Vue入门</h1><h2 id="基本概念和常用指令"><a href="#基本概念和常用指令" class="headerlink" title="基本概念和常用指令"></a>基本概念和常用指令</h2><p>vue与jquery的区别，最重要的一点就是前者属于声明式的，描述状态与视图之间的关系，我们关注“状态”，或者说是“数据”，而后者属于命令式的，我们需要完成对状态的判断，再进行DOM操作。而vue在背后做了许多工作，把数据和DOM联系起来，让我们能使用简洁的，有序，更易于维护的语法来完成网页的交互。</p>
-<p><strong>核心概念</strong>：1.组件化（细分代码）<br>             2.双向数据流（ES5:defineProperty）（js内存属性&lt;——&gt;页面变化）</p>
-<p><a href="https://cn.vuejs.org/v2/guide/comparison.html" target="_blank" rel="noopener">vue与react，angular之间的区别（链接）</a></p>
-<p><strong>vue中常用指令</strong></p>
-<ol>
-<li>v-text：更新元素的innertext</li>
-<li>v-html：更新元素的innerhtml</li>
-<li>v-show：元素是否显示或隐藏</li>
-<li>v-if：元素是否移除</li>
-<li>v-model：双向数据绑定</li>
-<li>v-bind：单向数据绑定(js影响页面)，class结合v-bind(v-bind:class=”xxx”,简写：’:属性名=”表达式”‘)</li>
-<li>v-on：监听DOM事件(v-on:事件=”表达式||函数名”,简写：‘@事件=”表达式||函数名”‘)</li>
-<li>v-for：操作数组（item,index）或对象(value,key,index)</li>
-</ol>
+                <h1 id="canvas踩坑"><a href="#canvas踩坑" class="headerlink" title="canvas踩坑"></a>canvas踩坑</h1><h2 id="矩形边框粗细不一致"><a href="#矩形边框粗细不一致" class="headerlink" title="矩形边框粗细不一致"></a>矩形边框粗细不一致</h2><p>在实践中发现，通过canvas绘制的矩形上边框和左边框比下边框和右边框都要细？？？我们使用了easeljs，不科学啊，明明就只是调用了API，设置了同样的刷子宽度，怎么效果是这样子。<br>    <html><br>    <head><br>    <meta name="viewport" content="width=device-width"><br>    <title>测试</title><br>    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></head></html></p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+html, body {
+width: 100%;
+height: 100%;
+}
+   #mycanvas {
+   width: 200px;
+   height:200px;
+   /* background-color: aqua; */
+   }
+   #mycanvas {
+   width: 200px;
+   height:200px;
+   /* background-color: aqua; */
+   }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div&gt;
+&lt;canvas id=&quot;mycanvas&quot;&gt;&lt;/canvas&gt;
+&lt;canvas id=&quot;mycanvas1&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot; src=&apos;easeljs-NEXT.min.js&apos;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+//easeljs绘制矩形
+let canvas = document.querySelector(&apos;#mycanvas&apos;);
+//创建舞台
+let stage = new createjs.Stage(canvas);
+//舞台自动更新
+//createjs.Ticker.on(&apos;tick&apos;,stage);
+//创建一个Shape对象
+let rect = new createjs.Shape();
+//用画笔设置颜色，调用方法画矩形，矩形参数猜都猜出来了：x,y,w,h
+//rect.graphics.drawRect(0, 0,80, 20);
+//rect.graphics.setStrokeStyle(2).beginStroke(2).drawRect(2, 0,80, 20);
+rect.graphics.setStrokeStyle(2).beginStroke(2).drawRect(0, 0,80, 20).endStroke();
+//添加到舞台
+stage.addChild(rect);
+stage.update();
+
+ //原生canvas绘制矩形
+ //获取canvas元素
+ var canvasDom = document.getElementById(&quot;mycanvas1&quot;);
+ //获取上下文
+ var context = canvasDom.getContext(&apos;2d&apos;);
+ //指定绘制线样式、颜色
+ context.strokeStyle = &quot;black&quot;;
+ //绘制矩形，只有线。
+ context.strokeRect(10, 10, 190, 100);
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/1.png" alt=""></p>
+<hr>
+<p>可以明显地看到左边那个矩形上边框明显较细。<br>开始，我怀疑是easeljs绘制矩形做了一些处理；实际上，和canvas绘制直线的方式有关。</p>
+<blockquote>
+</blockquote>
+<p>canvas绘制线条是从中间向两边绘制的，比如说你定义x坐标为1，直线宽度为1，它就会以1为中心，向左0.5像素，向右0.5像素，但是渲染时不支持小于0.5像素，所以会绘制成1像素，然后左边右边各1像素，你得到得就是双倍加粗版线条；另外，当你绘制的内容超出画布时是不会显示的，在我的实例中，矩形的绘制起点是（0,0），线的宽度是2，所以上边框只能显示出宽度为1的线条。所以，我把绘制起点改成（4,4），就可以绘制出粗细一致的矩形框了。</p>
+<p>效果如下：<br><img src="https://github.com/Txllmz/Txllmz.github.io/blob/master/images/2.png" alt=""></p>
 
             </div>
 </article>
